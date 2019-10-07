@@ -103,6 +103,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         body{ font: 14px sans-serif; }
         .wrapper{ width: 350px; padding: 20px; }
     </style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+	
+	$( document ).ready(function() {
+   
+
+	var Access = prompt("Access Key");
+	if(Access = "Ach1eve"){
+		
+	}
+	else{
+		window.location.replace("login.php");
+
+	}
+	});
+	</script>
+	
 </head>
 <body>
     <div class="wrapper">

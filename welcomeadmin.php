@@ -1,13 +1,24 @@
 <?php
+
+$valid_passwords = array ("admin" => "Ach1eve");
+$valid_users = array_keys($valid_passwords);
+
+$user = $_SERVER['PHP_AUTH_USER'];
+$pass = $_SERVER['PHP_AUTH_PW'];
+
+$validated = (in_array($user, $valid_users)) && ($pass == $valid_passwords[$user]);
+
+if (!$validated) {
+  header('WWW-Authenticate: Basic realm="Achieve Admin Portal"');
+  header('HTTP/1.0 401 Unauthorized');
+  die ("Not authorized");
+}
+
 // Initialize the session
 require_once "config.php";
 session_start();
  
-// Check if the user is logged in, if not then redirect him to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
-}
+
 ?>
  
 <!DOCTYPE html>
@@ -143,17 +154,18 @@ function stripeTokenHandler(token) {
 </head>
 <body>
     <div class="page-header">
-        <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to Achieve Potential.</h1>
+        <h1>Hi ADMIN</h1>
     </div>
     <p>
-        <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
-        <a href="logout.php" class="btn btn-danger">Sign Out</a>
+      
+        <a href="home.php" class="btn btn-danger">Sign Out</a>
     </p>
 <table border="1" align="center">
 <tr>
   <td>Course Name</td>
   <td>Start Date And End Date</td>
  
+  <td></td>
   <td></td>
 </tr>
 <?php
@@ -167,12 +179,20 @@ while ($row = mysqli_fetch_array($query)) {
     <td>{$row['Name']}</td>
     <td>{$row['Date']}</td>
    
-     <td><button type='button'>Pay ${$row['price']} Now</button></td>
+     <td><button type='button'>Remove Course</button></td>
+     <td><button type='button'>Modify Course</button></td>
     </tr>";
 
 }
 
 ?>
+<tr>
+    <td></td>
+    <td></td>
+   
+     <td></td>
+     <td><button type='button'>Add Course</button></td>
+    </tr>
 </table>
 
 </body>
